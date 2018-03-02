@@ -1,0 +1,16 @@
+#Select Flight ID, Airline Name, Departure and Arrival Time and Date that starts from the Airport in city of Las Vegas and group by departure time
+
+SELECT Flight.Flight_ID, Airline.Airline_Name,Schedule.Departure_Date,Schedule.Departure_Time,Schedule.Arrival_Date,Schedule.Arrival_Time
+FROM Flight INNER JOIN Airline
+ON Flight.Airline_ID=Airline.Airline_ID
+INNER JOIN Schedule
+ON Schedule.Flight_ID=Flight.Flight_ID
+INNER JOIN Airport
+ON Airport.Airport_ID=Flight.Departure_Airport_ID OR Airport.Airport_ID=Flight.Arrival_Airport_ID
+WHERE Airport.Airport_City='Las Vegas'
+GROUP BY Departure_Time;
+
+
+
+
+

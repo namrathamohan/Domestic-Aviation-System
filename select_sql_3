@@ -1,0 +1,28 @@
+#Select the Airport ID, Name, and City of Airports that have not had Customers from San Jose or Seattle City depart or arrive from that Airport
+
+SELECT distinct A.Airport_ID, A.Airport_Name, A.Airport_City
+FROM Airport A
+WHERE A.Airport_ID NOT IN
+(SELECT A.Airport_ID
+FROM Airport A INNER JOIN Flight F
+ON A.Airport_ID = F.Arrival_Airport_ID
+INNER JOIN Schedule S
+ON S.Flight_ID = F.Flight_ID
+INNER JOIN Itinerary I
+ON S.Schedule_ID = I.Schedule_ID
+INNER JOIN Customer C
+ON I.Customer_ID = C.Customer_ID
+WHERE C.Customer_City = 'San Jose'
+OR C.Customer_City = 'Seattle')
+AND A.Airport_ID NOT IN
+(SELECT A.Airport_ID
+FROM Airport A INNER JOIN Flight F
+ON A.Airport_ID = F.Departure_Airport_ID
+INNER JOIN Schedule S
+ON S.Flight_ID = F.Flight_ID
+INNER JOIN Itinerary I
+ON S.Schedule_ID = I.Schedule_ID
+INNER JOIN Customer C
+ON I.Customer_ID = C.Customer_ID
+WHERE C.Customer_City = 'San Jose'
+OR C.Customer_City = 'Seattle');

@@ -1,0 +1,17 @@
+#Select the Airline Name and Number of transactions made by customers between 2017-05-22 and 2017-12-30
+
+SELECT A.Airline_Name, COUNT(P.Payment_ID) as Number_of_transactions
+FROM Airline A INNER JOIN Flight F
+ON A.Airline_ID = F.Airline_ID
+INNER JOIN Schedule S
+ON F.Flight_ID = S.Flight_ID
+INNER JOIN Itinerary I
+ON S.Schedule_ID = I.Schedule_ID
+INNER JOIN Payment P
+ON I.Itinerary_ID = P.Itinerary_ID
+WHERE S.Departure_Date BETWEEN '2017-01-01' and '2017-12-31'
+AND S.Arrival_Date BETWEEN '2017-01-01' and '2017-12-31'
+GROUP BY A.Airline_Name; 
+
+
+

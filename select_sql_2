@@ -1,0 +1,12 @@
+#Select the Airport Name and City in the state of Louisiana for Flights departing and arriving between 2017-01-01 to 2019-12-12 and group by Airport Name
+
+SELECT A.Airport_Name, A.Airport_City
+FROM Airport A INNER JOIN Flight F
+ON A.Airport_ID = F.Departure_Airport_ID 
+OR A.Airport_ID = F.Arrival_Airport_ID 
+INNER JOIN Schedule S
+ON S.Flight_ID = F.Flight_ID
+WHERE A.Airport_State = 'Louisiana' 
+AND S.Departure_Date BETWEEN '2017-01-01' and '2019-12-12'
+AND S.Arrival_Date BETWEEN '2017-01-01' and '2019-12-12'
+GROUP BY A.Airport_Name;

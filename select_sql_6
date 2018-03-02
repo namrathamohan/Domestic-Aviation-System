@@ -1,0 +1,29 @@
+#Select the Customer Name who have a card that does not expire in 2018 and have not ridden a flight owned by Spirit Airline.
+
+SELECT C.Customer_Name, C.Customer_City
+FROM Customer C INNER JOIN Card Ca
+ON C.Customer_ID = Ca.Customer_ID
+WHERE Ca.Expiry_Year <> '2018' and C.Customer_Name NOT IN
+(SELECT C.Customer_Name
+FROM Customer C INNER JOIN Itinerary I 
+ON C.Customer_ID = I.Customer_ID
+INNER JOIN Schedule S
+ON S.Schedule_ID = I.Schedule_ID
+INNER JOIN Flight F
+ON F.Flight_ID = S.Flight_ID
+INNER JOIN Airline A
+ON A.Airline_ID = F.Airline_ID
+where A.Airline_Name = 'Spirit')
+AND C.Customer_Name NOT IN
+(SELECT C.Customer_Name
+FROM Customer C INNER JOIN Itinerary I 
+ON C.Customer_ID = I.Customer_ID
+INNER JOIN Schedule S
+ON S.Schedule_ID = I.Schedule_ID
+INNER JOIN Flight F 
+ON F.Flight_ID = S.Flight_ID
+INNER JOIN Airline A 
+ON A.Airline_ID = F.Airline_ID
+where A.Airline_Name = 'Spirit')
+GROUP BY C.Customer_Name, C.Customer_City
+ORDER BY C.Customer_Name;

@@ -1,0 +1,131 @@
+drop table if exists Payment;
+drop table if exists Card;
+drop table if exists Itinerary;
+drop table if exists Customer;
+drop table if exists Schedule;
+drop table if exists Flight;
+drop table if exists Airport;
+drop table if exists Airline;
+
+#Create Table Airline
+
+CREATE TABLE Airline(
+Airline_ID varchar(10),
+Airline_Name varchar(100) NOT NULL,
+primary key(Airline_ID)
+);
+
+#Create Table Airport
+
+CREATE TABLE Airport(
+Airport_ID int,
+Airport_Name varchar(60) NOT NULL,
+Airport_City varchar(20),
+Airport_State varchar(20),
+Latitude float,
+Longitude float,
+primary key(Airport_ID)
+);
+
+#Create Table Flight
+
+CREATE TABLE Flight(
+Flight_ID varchar(20),
+Airline_ID varchar(10) NOT NULL,
+Departure_Airport_ID int,
+Arrival_Airport_ID int,
+primary key(Flight_ID),
+foreign key(Airline_ID) REFERENCES Airline(Airline_ID) ON DELETE RESTRICT,
+foreign key(Departure_Airport_ID) REFERENCES Airport(Airport_ID) ON DELETE RESTRICT,
+foreign key(Arrival_Airport_ID) REFERENCES Airport(Airport_ID) ON DELETE RESTRICT
+);
+
+
+#Create Table Schedule
+
+CREATE TABLE Schedule(
+Schedule_ID varchar(20) NOT NULL,
+Flight_ID varchar(20) NOT NULL,
+Departure_Date date NOT NULL,
+Arrival_Date date NOT NULL,
+Departure_Time time NOT NULL,
+Arrival_Time time NOT NULL,
+primary key(Schedule_ID),
+foreign key(Flight_ID) REFERENCES Flight(Flight_ID) ON DELETE RESTRICT
+);
+
+
+#Create Table Customer
+
+CREATE TABLE Customer(
+Customer_ID varchar(20),
+Customer_Name varchar(20) NOT NULL,
+Customer_Address varchar(100) NOT NULL,
+Customer_City varchar(20) NOT NULL,
+Customer_Phone varchar(20),
+Customer_Email varchar(20) NOT NULL,
+primary key(Customer_ID)
+);
+
+
+#Create Table Itinerary
+
+CREATE TABLE Itinerary(
+Itinerary_ID varchar(20),
+Schedule_ID varchar(20) NOT NULL,
+Customer_ID varchar(20) NOT NULL,
+Seat_Number varchar(20),
+Total_Cost float NOT NULL Default 0,
+primary key(Itinerary_ID),
+foreign key(Schedule_ID) REFERENCES Schedule(Schedule_ID) ON DELETE RESTRICT,
+foreign key(Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE RESTRICT
+);
+
+
+#Create Table Card
+
+CREATE TABLE Card(
+Card_ID int,
+Customer_ID varchar(20) NOT NULL,
+Card_Number varchar(20) NOT NULL UNIQUE,
+Expiry_Month varchar(20) NOT NULL,
+Expiry_Year varchar(20) NOT NULL,
+primary key(Card_ID),
+foreign key(Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE RESTRICT
+);
+
+#Create Table Payment
+
+CREATE TABLE Payment(
+Payment_ID varchar(20),
+Card_ID int NOT NULL,
+Itinerary_ID varchar(20) NOT NULL,
+primary key(Payment_ID),
+foreign key(Card_ID) REFERENCES Card(Card_ID) ON DELETE RESTRICT
+#foreign key(Itinerary_ID) REFERENCES Itinerary(Itinerary_ID) ON DELETE RESTRICT
+);
+
+
+#Load Data for Airline
+load data local infile '~/projectgroup10/Airline.csv' into table Airline fields terminated by ',';
+
+#Load Data for Airport
+load data local infile '~/projectgroup10/Airport.csv' into table Airport fields terminated by ',';
+
+#Load Data for Flight
+load data local infile '~/projectgroup10/Flight.csv' into table Flight fields terminated by ',';
+
+#Load Data for Schedule
+load data local infile '~/projectgroup10/Schedule.csv' into table Schedule fields terminated by ',';
+
+#Load Data for Customer
+load data local infile '~/projectgroup10/Customer.csv' into table Customer fields terminated by ',';
+
+#Load Data for Itinerary
+load data local infile '~/projectgroup10/Itinerary.csv' into table Itinerary fields terminated by ',';
+
+#Load Data for Card
+load data local infile '~/projectgroup10/Card.csv' into table Card fields terminated by ',';
+
+#Load Data for Payment
+load data local infile '~/projectgroup10/Payment.csv' into table Payment fields terminated by ',';

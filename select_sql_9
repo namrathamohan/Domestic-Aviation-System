@@ -1,0 +1,13 @@
+#Select Airport ID and Name from Airport that don't have any Itinerary
+
+SELECT distinct(Schedule.Schedule_ID), Departure_Time, Arrival_Time
+FROM Schedule
+WHERE Schedule.Schedule_ID NOT IN
+(SELECT Itinerary.Schedule_ID
+FROM Schedule INNER JOIN Itinerary
+ON Schedule.Schedule_ID = Itinerary.Schedule_ID);
+
+
+
+
+

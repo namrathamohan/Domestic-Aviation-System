@@ -1,0 +1,16 @@
+#Select customer names, city and seats of customers who are arriving at stations that are along the Latitude>30 and Latitude<42 and Longitude>-101 and Longitude<126.
+
+SELECT Customer.Customer_Name, Customer_City, Itinerary.Seat_Number
+FROM Customer INNER JOIN Itinerary
+ON Customer.Customer_ID =Itinerary.Customer_ID
+INNER JOIN Schedule
+ON Schedule.Schedule_ID = Itinerary.Schedule_ID
+INNER JOIN Flight
+ON Flight.Flight_ID = Schedule.Flight_ID
+INNER JOIN Airport
+ON Airport.Airport_ID = Flight.Arrival_Airport_ID
+WHERE Latitude > 31.00000 AND Latitude < 40.00000
+AND Longitude > -130.00000 AND Longitude < -101.00000
+GROUP BY Customer.Customer_Name;
+
+

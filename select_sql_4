@@ -1,0 +1,13 @@
+#Select the Airport name and daily revenue of Airports with a daily revenue of more than $200 arranging the results in descending order of daily revenue
+
+SELECT Airport.Airport_Name as Airport_Name, sum(Total_Cost) as Daily_Revenue
+FROM Airport 
+INNER JOIN Flight
+ON Flight.Departure_Airport_ID = Airport.Airport_ID
+INNER JOIN Schedule
+ON Flight.Flight_ID = Schedule.Flight_ID
+INNER JOIN Itinerary 
+ON Schedule.Schedule_ID = Itinerary.Schedule_ID
+GROUP BY Airport_Name
+HAVING sum(Total_Cost) > 200
+ORDER BY Daily_Revenue desc;

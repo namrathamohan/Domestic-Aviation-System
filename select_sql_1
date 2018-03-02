@@ -1,0 +1,14 @@
+#Select the name and city of Customers departing from California between 9:00 and 23:00
+
+SELECT distinct(Customer.Customer_Name), Customer.Customer_City
+FROM Customer INNER JOIN Itinerary
+ON Customer.Customer_ID = Itinerary.Customer_ID
+INNER JOIN Schedule
+ON Schedule.Schedule_ID = Itinerary.Schedule_ID
+INNER JOIN Flight
+ON Flight.Flight_ID = Schedule.Flight_ID
+INNER JOIN Airport
+ON Airport.Airport_ID = Flight.Departure_Airport_ID
+WHERE Airport.Airport_State = 'California'
+AND Schedule.Departure_time BETWEEN "9:00" and "23:00";
+

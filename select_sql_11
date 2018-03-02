@@ -1,0 +1,6 @@
+#Select Airline Name and number of Flights for each Flight
+
+SELECT Airline.Airline_Name, COUNT(Flight.Flight_ID) as Number_of_Planes
+FROM Airline INNER JOIN Flight
+ON Flight.Airline_ID=Airline.Airline_ID
+GROUP BY Airline.Airline_Name;

@@ -1,0 +1,10 @@
+#Select the Airport ID, name, and city of Airports in Texas with flights arriving between 14:00 and 20:00
+
+SELECT distinct (A.Airport_ID), A.Airport_Name, A.Airport_City
+FROM Airport A INNER JOIN Flight F
+ON A.Airport_ID = F.Arrival_Airport_ID
+INNER JOIN Schedule S
+ON F.Flight_ID = S.Flight_ID
+WHERE S.Arrival_Time > '00:00' AND 
+S.Arrival_Time < '23:00'
+AND A.Airport_State='Texas';

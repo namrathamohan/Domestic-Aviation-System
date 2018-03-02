@@ -1,0 +1,15 @@
+#Select the Airport Name, Airport id and Customer Name pairs where a Customer has arrived at an airport in the city of the Customer.
+
+SELECT Airport.Airport_ID as Airport_ID, Airport.Airport_Name as Airport_Name, Customer.Customer_Name as Customer_Name
+FROM Airport INNER JOIN Flight
+ON Airport.Airport_ID=Flight.Departure_Airport_ID
+INNER JOIN Schedule
+ON Flight.Flight_ID = Schedule.Flight_ID
+INNER JOIN Itinerary
+ON Schedule.Schedule_ID = Itinerary.Schedule_ID
+INNER JOIN Customer
+ON Itinerary.Customer_ID=Customer.Customer_ID
+WHERE Airport.Airport_City = Customer.Customer_City;
+
+
+
